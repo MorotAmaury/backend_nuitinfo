@@ -1,0 +1,281 @@
+================================================================================
+                    REQUÊTES CURL PRÊTES À L'EMPLOI
+                  Django Unchained - Backend API Tests
+================================================================================
+
+Base URL: http://localhost:3000/api
+
+================================================================================
+                             1. USERS ENDPOINTS
+================================================================================
+
+--- 1.1 CREATE USER ---
+curl -X POST "http://localhost:3000/api/users" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "john_doe",
+    "email": "john@example.com",
+    "password_hash": "$2a$10$hash_example_1",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": false
+  }'
+
+--- 1.2 CREATE USER 2 ---
+curl -X POST "http://localhost:3000/api/users" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "jane_smith",
+    "email": "jane@example.com",
+    "password_hash": "$2a$10$hash_example_2",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "is_admin": false
+  }'
+
+--- 1.3 GET ALL USERS ---
+curl -X GET "http://localhost:3000/api/users"
+
+--- 1.4 GET SPECIFIC USER ---
+curl -X GET "http://localhost:3000/api/users/1"
+
+--- 1.5 UPDATE USER ---
+curl -X PUT "http://localhost:3000/api/users/1" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "first_name": "Johnny",
+    "last_name": "Doe"
+  }'
+
+--- 1.6 DELETE USER ---
+curl -X DELETE "http://localhost:3000/api/users/1"
+
+================================================================================
+                           2. PROJECTS ENDPOINTS
+================================================================================
+
+--- 2.1 CREATE PROJECT ---
+curl -X POST "http://localhost:3000/api/projects" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Website Redesign",
+    "description": "Complete redesign of company website",
+    "technologies": "React,Node.js,PostgreSQL",
+    "responsible_id": 1,
+    "expected_members": 5,
+    "location": "Paris",
+    "status": "en_cours"
+  }'
+
+--- 2.2 CREATE PROJECT 2 ---
+curl -X POST "http://localhost:3000/api/projects" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Mobile App Development",
+    "description": "iOS and Android mobile application",
+    "technologies": "React Native,Firebase",
+    "responsible_id": 2,
+    "expected_members": 3,
+    "location": "Lyon",
+    "status": "en_cours"
+  }'
+
+--- 2.3 GET ALL PROJECTS ---
+curl -X GET "http://localhost:3000/api/projects"
+
+--- 2.4 GET SPECIFIC PROJECT ---
+curl -X GET "http://localhost:3000/api/projects/1"
+
+--- 2.5 GET PROJECT MEMBERS ---
+curl -X GET "http://localhost:3000/api/projects/1/members"
+
+--- 2.6 UPDATE PROJECT ---
+curl -X PUT "http://localhost:3000/api/projects/1" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "terminé",
+    "expected_members": 6
+  }'
+
+--- 2.7 DELETE PROJECT ---
+curl -X DELETE "http://localhost:3000/api/projects/1"
+
+================================================================================
+                        3. PARTICIPATIONS ENDPOINTS
+================================================================================
+
+--- 3.1 ADD USER TO PROJECT ---
+curl -X POST "http://localhost:3000/api/participations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "project_id": 1
+  }'
+
+--- 3.2 ADD USER 2 TO PROJECT 1 ---
+curl -X POST "http://localhost:3000/api/participations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 2,
+    "project_id": 1
+  }'
+
+--- 3.3 GET ALL PARTICIPATIONS ---
+curl -X GET "http://localhost:3000/api/participations"
+
+--- 3.4 GET SPECIFIC PARTICIPATION ---
+curl -X GET "http://localhost:3000/api/participations/1"
+
+--- 3.5 GET USER'S PROJECTS ---
+curl -X GET "http://localhost:3000/api/users/1/participations"
+
+--- 3.6 REMOVE USER FROM PROJECT (by participation id) ---
+curl -X DELETE "http://localhost:3000/api/participations/1"
+
+--- 3.7 REMOVE USER FROM PROJECT (by user and project id) ---
+curl -X DELETE "http://localhost:3000/api/participations/user/2/project/1"
+
+================================================================================
+                           4. TALENTS ENDPOINTS
+================================================================================
+
+--- 4.1 CREATE TALENT PROFILE ---
+curl -X POST "http://localhost:3000/api/talents" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "technologies": "React,Vue.js,Node.js,Python,PostgreSQL",
+    "description": "Full-stack developer with 5+ years of experience",
+    "location": "Paris"
+  }'
+
+--- 4.2 CREATE TALENT PROFILE 2 ---
+curl -X POST "http://localhost:3000/api/talents" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 2,
+    "technologies": "React Native,TypeScript,Firebase,AWS",
+    "description": "Mobile developer specialized in cross-platform development",
+    "location": "Lyon"
+  }'
+
+--- 4.3 GET ALL TALENTS ---
+curl -X GET "http://localhost:3000/api/talents"
+
+--- 4.4 GET SPECIFIC TALENT ---
+curl -X GET "http://localhost:3000/api/talents/1"
+
+--- 4.5 GET TALENT FOR SPECIFIC USER ---
+curl -X GET "http://localhost:3000/api/talents/user/1"
+
+--- 4.6 UPDATE TALENT PROFILE ---
+curl -X PUT "http://localhost:3000/api/talents/1" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "technologies": "React,Vue.js,Node.js,Python,PostgreSQL,Docker",
+    "location": "Île-de-France"
+  }'
+
+--- 4.7 DELETE TALENT PROFILE ---
+curl -X DELETE "http://localhost:3000/api/talents/1"
+
+--- 4.8 DELETE USER'S TALENT PROFILE ---
+curl -X DELETE "http://localhost:3000/api/talents/user/2"
+
+================================================================================
+                              ERROR TESTING
+================================================================================
+
+--- Error 1: Non-existent user ---
+curl -X GET "http://localhost:3000/api/users/999"
+
+--- Error 2: Missing required fields ---
+curl -X POST "http://localhost:3000/api/users" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com"
+  }'
+
+--- Error 3: Non-existent project ---
+curl -X POST "http://localhost:3000/api/participations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "project_id": 999
+  }'
+
+--- Error 4: Delete non-existent resource ---
+curl -X DELETE "http://localhost:3000/api/projects/999"
+
+================================================================================
+                          BONUS: WITH JQ FORMATTING
+================================================================================
+
+(Ces commandes requirent jq installé: sudo apt-get install jq)
+
+--- Get users avec formatage ---
+curl -X GET "http://localhost:3000/api/users" | jq '.'
+
+--- Get projects avec formatage ---
+curl -X GET "http://localhost:3000/api/projects" | jq '.'
+
+--- Get talents avec formatage ---
+curl -X GET "http://localhost:3000/api/talents" | jq '.'
+
+--- Get prettified response ---
+curl -s -X GET "http://localhost:3000/api/participations" | jq '.'
+
+================================================================================
+                        WORKFLOW COMPLET - ÉTAPE PAR ÉTAPE
+================================================================================
+
+1. Créer 2 users:
+   Copier et exécuter: Requête 1.1 et 1.2
+
+2. Lister les users:
+   Copier et exécuter: Requête 1.3
+
+3. Créer 2 projets (avec les users 1 et 2 comme responsables):
+   Copier et exécuter: Requête 2.1 et 2.2
+
+4. Lister les projets:
+   Copier et exécuter: Requête 2.3
+
+5. Ajouter des users aux projets:
+   Copier et exécuter: Requête 3.1 et 3.2
+
+6. Voir les membres du projet 1:
+   Copier et exécuter: Requête 2.5
+
+7. Voir les projets du user 1:
+   Copier et exécuter: Requête 3.5
+
+8. Créer les profils talents:
+   Copier et exécuter: Requête 4.1 et 4.2
+
+9. Lister tous les talents:
+   Copier et exécuter: Requête 4.3
+
+10. Voir le talent du user 1:
+    Copier et exécuter: Requête 4.5
+
+================================================================================
+                              NOTES IMPORTANTES
+================================================================================
+
+• Technologies: Comma-separated values (ex: "React,Node.js,PostgreSQL")
+• Status: Valeurs possibles = en_cours, terminé, en_pause, annulé
+• Username: Max 50 caractères, unique
+• Email: Doit être unique
+• Participation: Un user ne peut pas participer 2x au même projet
+• Talents: Un user ne peut avoir qu'un seul profil talent
+
+================================================================================
+                            EXÉCUTER TOUS LES TESTS
+================================================================================
+
+Depuis le dossier backend:
+chmod +x CURL_TESTS.sh
+./CURL_TESTS.sh
+
+================================================================================

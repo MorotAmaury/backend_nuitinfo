@@ -1,0 +1,206 @@
+====================================
+TESTS CURL - API CRUD SHOKOBONS
+====================================
+
+BASE URL: http://localhost:3000/api
+
+====================================
+1. USERS ENDPOINTS
+====================================
+
+# List all users (GET)
+curl -s http://localhost:3000/api/users | jq .
+
+# Create a new user (POST)
+curl -s -X POST http://localhost:3000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "player1@test.com",
+    "password_hash": "$2a$10$hashedpasswordexample123",
+    "is_admin": false
+  }' | jq .
+
+# Create another user for testing
+curl -s -X POST http://localhost:3000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "admin@test.com",
+    "password_hash": "$2a$10$hashedpasswordexample456",
+    "is_admin": true
+  }' | jq .
+
+# Get user by ID (replace 1 with actual ID)
+curl -s http://localhost:3000/api/users/1 | jq .
+
+# Update user (PUT)
+curl -s -X PUT http://localhost:3000/api/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "updated_player@test.com",
+    "is_admin": true
+  }' | jq .
+
+# Delete user (replace 2 with actual ID to delete)
+curl -s -X DELETE http://localhost:3000/api/users/2 | jq .
+
+
+====================================
+2. ACHIEVEMENTS ENDPOINTS
+====================================
+
+# List all achievements (GET)
+curl -s http://localhost:3000/api/achievements | jq .
+
+# Create achievement (POST)
+curl -s -X POST http://localhost:3000/api/achievements \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "First Victory",
+    "description": "Win your first battle"
+  }' | jq .
+
+# Create another achievement
+curl -s -X POST http://localhost:3000/api/achievements \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Champion",
+    "description": "Win 10 battles"
+  }' | jq .
+
+# Get achievement by ID (replace 1 with actual ID)
+curl -s http://localhost:3000/api/achievements/1 | jq .
+
+# Update achievement (PUT)
+curl -s -X PUT http://localhost:3000/api/achievements/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "Win your first Shokobons battle - Updated!"
+  }' | jq .
+
+# Delete achievement (replace 2 with actual ID)
+curl -s -X DELETE http://localhost:3000/api/achievements/2 | jq .
+
+
+====================================
+3. UPGRADES ENDPOINTS
+====================================
+
+# List all upgrades (GET)
+curl -s http://localhost:3000/api/upgrades | jq .
+
+# Create upgrade (POST)
+curl -s -X POST http://localhost:3000/api/upgrades \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Attack Boost",
+    "description": "Increase attack power by 50%",
+    "effect": "multiply_attack",
+    "multiplier": 1.5,
+    "cost": 100
+  }' | jq .
+
+# Create another upgrade
+curl -s -X POST http://localhost:3000/api/upgrades \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Speed Upgrade",
+    "description": "Increase speed by 25%",
+    "effect": "multiply_speed",
+    "multiplier": 1.25,
+    "cost": 75
+  }' | jq .
+
+# Get upgrade by ID (replace 1 with actual ID)
+curl -s http://localhost:3000/api/upgrades/1 | jq .
+
+# Update upgrade (PUT)
+curl -s -X PUT http://localhost:3000/api/upgrades/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "multiplier": 2.0,
+    "cost": 150
+  }' | jq .
+
+# Delete upgrade (replace 2 with actual ID)
+curl -s -X DELETE http://localhost:3000/api/upgrades/2 | jq .
+
+
+====================================
+4. GAME STATES ENDPOINTS
+====================================
+
+# List all game states (GET)
+curl -s http://localhost:3000/api/game_states | jq .
+
+# Create game state (POST) - use user_id 1 (adjust if needed)
+curl -s -X POST http://localhost:3000/api/game_states \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "state_data": "{\"level\": 5, \"score\": 1000, \"team\": [1,2,3]}"
+  }' | jq .
+
+# Get game state by ID (replace 1 with actual ID)
+curl -s http://localhost:3000/api/game_states/1 | jq .
+
+# Update game state (PUT)
+curl -s -X PUT http://localhost:3000/api/game_states/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "state_data": "{\"level\": 6, \"score\": 1500, \"team\": [1,2,4]}"
+  }' | jq .
+
+# Delete game state (replace 1 with actual ID)
+curl -s -X DELETE http://localhost:3000/api/game_states/1 | jq .
+
+
+====================================
+5. USER ACHIEVEMENTS ENDPOINTS
+====================================
+
+# List all user achievements (GET)
+curl -s http://localhost:3000/api/user_achievements | jq .
+
+# Assign achievement to user (POST) - user_id 1, achievement_id 1
+curl -s -X POST http://localhost:3000/api/user_achievements \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "achievement_id": 1
+  }' | jq .
+
+# Assign another achievement to user
+curl -s -X POST http://localhost:3000/api/user_achievements \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "achievement_id": 2
+  }' | jq .
+
+# Get specific user achievement (user_id: 1, achievement_id: 1)
+curl -s http://localhost:3000/api/user_achievements/1/1 | jq .
+
+# Remove achievement from user (user_id: 1, achievement_id: 2)
+curl -s -X DELETE http://localhost:3000/api/user_achievements/1/2 | jq .
+
+
+====================================
+NOTES:
+====================================
+
+1. Make sure the server is running:
+   npm start
+
+2. If jq is not installed, you can install it or remove "| jq ." to see raw JSON
+
+3. Adjust IDs in the commands based on actual database IDs returned
+
+4. POST requests create new items (will return the created item with its ID)
+
+5. PUT requests update items (return updated item)
+
+6. DELETE requests remove items (return confirmation)
+
+7. All timestamps (created_at, updated_at) are automatically set by the database
+
+====================================

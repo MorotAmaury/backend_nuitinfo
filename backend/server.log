@@ -1,0 +1,3 @@
+nohup: ignoring input
+Express app listening on port http://localhost:3000
+Connected to sqlite database: /home/paul-fougeray/Documents/Cours/ITI4/shokobons.exe/backend/database.sqlite
