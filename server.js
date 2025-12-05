@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 const port = process.env.PORT || 3939;
-import cors from "cors";
 
 app.use(cors({
   origin: ["http://localhost:3000", "https://ton-front.vercel.app", "https://ton-front-sur-railway.com"],
